@@ -19,13 +19,75 @@ body{background:var(--bg)}
 .page.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-.hero{background:linear-gradient(rgba(15,118,110,0.85),rgba(19,78,74,0.9)),url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80') center/cover;border-radius:18px;padding:40px 20px;color:white;text-align:center;margin-bottom:24px;box-shadow:0 8px 25px rgba(0,0,0,0.15)}
-.hero-title{font-size:42px;font-weight:900;letter-spacing:2px;margin-bottom:6px;text-shadow:0 3px 10px rgba(0,0,0,0.4)}
-.hero-sub{font-size:22px;font-weight:600;opacity:0.95;margin-bottom:18px}
-.hero p{font-size:14px;opacity:0.9;max-width:520px;margin:0 auto 20px;line-height:1.5}
-.hero-search{max-width:480px;margin:0 auto;display:flex;gap:8px}
-.hero-search input{flex:1;padding:13px 16px;border:none;border-radius:12px;font-size:15px;outline:none}
-.hero-search button{padding:13px 22px;background:#16a34a;color:white;border:none;border-radius:12px;font-weight:700;cursor:pointer}
+/* ===== LARGE VILLAGE HERO ===== */
+.hero{
+  background:linear-gradient(rgba(0,0,0,0.45), rgba(15,118,110,0.75)),
+             url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1400&q=90') center/cover no-repeat;
+  border-radius:22px;
+  padding:70px 24px 60px;
+  color:white;
+  text-align:center;
+  margin-bottom:28px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.25);
+  position:relative;
+  overflow:hidden;
+  min-height:380px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+.hero-welcome{
+  font-size:18px;
+  font-weight:500;
+  letter-spacing:1px;
+  margin-bottom:18px;
+  opacity:0.95;
+  text-shadow:0 2px 8px rgba(0,0,0,0.5);
+}
+.hero-title{
+  font-size:64px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin-bottom:12px;
+  text-shadow:0 4px 20px rgba(0,0,0,0.6);
+  line-height:1.1;
+}
+.hero-tagline{
+  font-size:22px;
+  font-weight:600;
+  letter-spacing:2px;
+  opacity:0.95;
+  margin-bottom:28px;
+  text-shadow:0 2px 10px rgba(0,0,0,0.5);
+  font-style:italic;
+}
+.hero-search{
+  max-width:480px;
+  width:100%;
+  display:flex;
+  gap:10px;
+}
+.hero-search input{
+  flex:1;
+  padding:15px 20px;
+  border:none;
+  border-radius:14px;
+  font-size:15px;
+  outline:none;
+  box-shadow:0 4px 15px rgba(0,0,0,0.15);
+}
+.hero-search button{
+  padding:15px 26px;
+  background:#16a34a;
+  color:white;
+  border:none;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+  font-size:15px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
 
 .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
 .stat-card{background:var(--card);padding:16px 10px;border-radius:14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);border:1px solid var(--border)}
@@ -40,7 +102,7 @@ body{background:var(--bg)}
 .cat-card .name{font-size:12px;font-weight:700;color:var(--text)}
 
 .worker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.wcard{background:var(--card);border-radius:16px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,0.05);border:1px solid var(--border);position:relative}
+.wcard{background:var(--card);border-radius:16px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,0.05);border:1px solid var(--border)}
 .wcard-top{display:flex;gap:12px}
 .wphoto{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#0f766e,#14b8a6);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;color:white}
 .wname{font-size:16px;font-weight:700}
@@ -58,16 +120,21 @@ body{background:var(--bg)}
 .recent-item{background:white;padding:10px 14px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
 
 /* Owner Section */
-.owner-section{background:white;border-radius:20px;padding:28px 20px;margin:30px 0 20px;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);text-align:center}
+.owner-section{background:white;border-radius:20px;padding:32px 22px;margin:30px 0 20px;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);text-align:center}
 .owner-photo{width:140px;height:140px;border-radius:50%;object-fit:cover;border:5px solid #0f766e;margin:0 auto 16px;display:block;box-shadow:0 6px 20px rgba(15,118,110,0.3)}
-.owner-name{font-size:24px;font-weight:800;color:#0f766e;margin-bottom:4px}
-.owner-title{font-size:14px;color:#64748b;margin-bottom:16px}
-.owner-details{text-align:left;max-width:420px;margin:0 auto 18px;font-size:14px;line-height:1.7;color:#334155}
+.owner-name{font-size:26px;font-weight:800;color:#0f766e;margin-bottom:2px}
+.owner-title{font-size:14px;color:#64748b;margin-bottom:18px;font-weight:500}
+.owner-details{text-align:left;max-width:440px;margin:0 auto 20px;font-size:14.5px;line-height:1.75;color:#334155}
+.owner-details p{margin-bottom:6px}
 .owner-details strong{color:#0f766e}
-.owner-contact{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.owner-links{display:flex;flex-direction:column;gap:8px;max-width:440px;margin:0 auto 18px;text-align:left}
+.owner-links a{color:#0f766e;text-decoration:none;font-size:14px;display:flex;align-items:center;gap:8px}
+.owner-links a:hover{text-decoration:underline}
+.owner-contact{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
 .owner-btn{padding:11px 22px;border-radius:10px;font-weight:700;text-decoration:none;font-size:14px;display:inline-flex;align-items:center;gap:6px}
 .btn-call{background:#16a34a;color:white}
 .btn-wa{background:#25D366;color:white}
+.btn-email{background:#0f766e;color:white}
 
 .footer{background:#134e4a;color:white;padding:28px 20px;text-align:center;margin-top:20px;border-radius:18px 18px 0 0}
 .footer p{font-size:13px;opacity:0.85;margin:4px 0}
@@ -75,8 +142,10 @@ body{background:var(--bg)}
 
 @media(max-width:640px){
   .stats-bar{grid-template-columns:repeat(2,1fr)}
-  .hero-title{font-size:34px}
-  .hero-sub{font-size:18px}
+  .hero{padding:50px 18px 45px;min-height:320px}
+  .hero-title{font-size:42px;letter-spacing:2px}
+  .hero-tagline{font-size:17px}
+  .hero-welcome{font-size:15px}
   .hero-search{flex-direction:column}
   .nav-btn{padding:6px 10px;font-size:11px}
   .owner-photo{width:120px;height:120px}
@@ -97,10 +166,13 @@ body{background:var(--bg)}
 
   <!-- HOME -->
   <div class="page active" id="page-home">
+    
+    <!-- LARGE VILLAGE HERO -->
     <div class="hero">
+      <div class="hero-welcome">मेरा गांव पेज पर आपका स्वागत है</div>
       <div class="hero-title">काम धाम</div>
-      <div class="hero-sub">मेरा गांव</div>
-      <p>गांव के मजदूर, कारीगर, पंडित, हलवाई, टीचर और सभी स्किल्ड वर्कर्स को आसानी से ढूंढें और किराए पर लें।</p>
+      <div class="hero-tagline">मेरा गांव • मेरी पहचान</div>
+      
       <div class="hero-search">
         <input type="text" id="heroSearch" placeholder="कारपेंटर, कुक, पंडित, टीचर खोजें..." onkeydown="if(event.key==='Enter')searchFromHero()">
         <button onclick="searchFromHero()">खोजें</button>
@@ -114,7 +186,7 @@ body{background:var(--bg)}
       <div class="stat-card"><div class="num">₹15Cr+</div><div class="lbl">मजदूरी</div></div>
     </div>
 
-    <div class="recent-box" id="recentBox">
+    <div class="recent-box">
       <h3>🆕 अभी-अभी रजिस्टर हुए मजदूर</h3>
       <div class="recent-list" id="recentList">
         <div class="recent-item"><span>अभी कोई नया रजिस्ट्रेशन नहीं</span></div>
@@ -127,9 +199,10 @@ body{background:var(--bg)}
     <div class="section-title">⭐ फीचर्ड मजदूर</div>
     <div class="worker-grid" id="featuredWorkers"></div>
 
-    <!-- ========== WEBSITE OWNER SECTION ========== -->
+    <!-- OWNER SECTION -->
     <div class="owner-section">
       <img src="owner.jpg" alt="DIVY - Website Owner" class="owner-photo" onerror="this.src='https://via.placeholder.com/140x140/0f766e/ffffff?text=DIVY'">
+      
       <div class="owner-name">DIVY</div>
       <div class="owner-title">Website Owner & Founder</div>
       
@@ -145,9 +218,16 @@ body{background:var(--bg)}
         <p>• 3 Years Experience as Teacher (New Delhi)</p>
       </div>
 
+      <div class="owner-links">
+        <a href="mailto:umadivy500@gmail.com">✉️ Email: umadivy500@gmail.com</a>
+        <a href="https://www.youtube.com/@123ihuman" target="_blank">▶️ YouTube: 123ihuman</a>
+        <a href="https://x.com/123ihuman" target="_blank">𝕏  X (Twitter): 123ihuman</a>
+      </div>
+
       <div class="owner-contact">
-        <a href="tel:+919369224174" class="owner-btn btn-call">📞 Call Now</a>
-        <a href="https://wa.me/919369224174?text=Namaste%20DIVY%20ji" class="owner-btn btn-wa" target="_blank">💬 WhatsApp</a>
+        <a href="tel:+919369224174" class="owner-btn btn-call">📞 Call</a>
+        <a href="https://wa.me/919369224174" class="owner-btn btn-wa" target="_blank">💬 WhatsApp</a>
+        <a href="mailto:umadivy500@gmail.com" class="owner-btn btn-email">✉️ Email</a>
       </div>
     </div>
   </div>
@@ -283,7 +363,7 @@ function makeWorkerCard(w){
     </div>
     <div class="wcard-btns">
       <a class="wbtn wbtn-call" href="tel:+91${phone}">📞 कॉल</a>
-      <a class="wbtn wbtn-wa" href="https://wa.me/91\( {phone}?text=नमस्ते%20 \){encodeURIComponent(w.name)}" target="_blank">💬 WhatsApp</a>
+      <a class="wbtn wbtn-wa" href="https://wa.me/91${phone}" target="_blank">💬 WhatsApp</a>
     </div>
   </div>`;
 }
@@ -322,40 +402,4 @@ function submitRegistration(){
   if(!name||!phone||!city||!cat||!wage){alert('कृपया सभी जरूरी जानकारी भरें');return;}
   
   const newWorker = {
-    id: Date.now(), name, phone, city, role:cat, rate:parseInt(wage)||500,
-    emoji: categories.find(c=>c.id===cat)?.emoji || '👷', isNew:true
-  };
-  workers.unshift(newWorker);
-  localStorage.setItem('kaamdhaam_workers', JSON.stringify(workers));
-  
-  document.getElementById('regSuccess').style.display='block';
-  updateRecentList();
-  renderFeatured();
-  
-  setTimeout(()=>{
-    document.getElementById('regSuccess').style.display='none';
-    document.getElementById('regName').value='';
-    document.getElementById('regPhone').value='';
-    document.getElementById('regCity').value='';
-    document.getElementById('regWage').value='';
-    showPage('home');
-  },2000);
-}
-
-function updateRecentList(){
-  const recent = workers.filter(w=>w.isNew).slice(0,5);
-  const box = document.getElementById('recentList');
-  if(recent.length===0){
-    box.innerHTML = '<div class="recent-item"><span>अभी कोई नया रजिस्ट्रेशन नहीं</span></div>';
-  } else {
-    box.innerHTML = recent.map(w=>`
-      <div class="recent-item">
-        <span><strong>${w.name}</strong> • ${getCatName(w.role)} • ${w.city}</span>
-        <span style="color:#16a34a;font-weight:700">₹${w.rate}/दिन</span>
-      </div>`).join('');
-  }
-}
-
-function renderLocList(){
-  const locs = ['सभी जगह','रामपुर','सीतापुर','लखनऊ','कानपुर','वाराणसी','अयोध्या','गोरखपुर','आगरा','दिल्ली','पटना','बहराइच'];
-  document.g
+    id: Date.now(), 
