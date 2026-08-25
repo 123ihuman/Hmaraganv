@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6366f1">
+<title>KaamDhaam - Hire Local Workers</title>
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiS2FhbURoYWFtIiwic2hvcnRfbmFtZSI6IkthYW1EaGFhbSIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZjhmYWZjIiwidGhlbWVfY29sb3IiOiIjNjM2NmYxIn0=">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+:root{--primary:#6366f1;--primary-dark:#4f46e5;--secondary:#10b981;--accent:#f59e0b;--danger:#ef4444;--bg:#f8fafc;--card:#ffffff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0}
+.app{max-width:1200px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative}
+.topbar{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:white;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(99,102,241,0.25)}
+.logo{font-size:22px;font-weight:800;display:flex;align-items:center;gap:10px;cursor:pointer}
+.nav-links{display:flex;gap:8px}
+.nav-btn{background:rgba(255,255,255,0.15);border:none;color:white;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s}
+.nav-btn:hover,.nav-btn.active{background:rgba(255,255,255,0.3)}
+.page{display:none;padding:24px;animation:fadeIn 0.3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero{background:linear-gradient(135deg,var(--primary) 0%,#8b5cf6 100%);border-radius:20px;padding:48px 32px;color:white;text-align:center;margin-bottom:32px}
+.hero h1{font-size:36px;font-weight:800;margin-bottom:12px}
+.hero p{font-size:16px;opacity:0.9;max-width:600px;margin:0 auto 24px}
+.hero-search{max-width:500px;margin:0 auto;display:flex;gap:10px}
+.hero-search input{flex:1;padding:14px 20px;border:none;border-radius:12px;font-size:15px;outline:none}
+.hero-search button{padding:14px 28px;background:var(--secondary);color:white;border:none;border-radius:12px;font-weight:700;cursor:pointer}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.stat-card{background:var(--card);padding:20px;border-radius:16px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.04);border:1px solid var(--border)}
+.stat-card .num{font-size:28px;font-weight:800;color:var(--primary)}
+.stat-card .lbl{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+.section-title{font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px;margin-bottom:32px}
+.cat-card{background:var(--card);border-radius:16px;padding:20px;text-align:center;cursor:pointer;border:2px solid var(--border);transition:all 0.2s}
+.cat-card:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:0 8px 24px rgba(99,102,241,0.12)}
+.cat-card .emoji{font-size:36px;margin-bottom:8px}
+.cat-card .name{font-size:13px;font-weight:700;color:var(--text)}
+.cat-card .count{font-size:11px;color:var(--muted);margin-top:2px}
+.browse-header{display:flex;gap:16px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
+.search-wrap{flex:1;min-width:260px;position:relative}
+.search-wrap input{width:100%;padding:12px 16px 12px 44px;border:2px solid var(--border);border-radius:12px;font-size:14px;outline:none}
+.search-wrap::before{content:"🔍";position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:14px}
+.loc-btn{padding:12px 20px;border:2px solid var(--border);background:var(--card);border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px}
+.loc-btn:hover{border-color:var(--primary);color:var(--primary)}
+.filter-chips{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:20px;scrollbar-width:none}
+.filter-chips::-webkit-scrollbar{display:none}
+.fchip{padding:8px 18px;border-radius:20px;border:2px solid var(--border);background:var(--card);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.fchip.active{background:var(--primary);color:white;border-color:var(--primary)}
+.worker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.wcard{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.04);border:1px solid var(--border);cursor:pointer;transition:all 0.2s;position:relative}
+.wcard:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.08)}
+.wcard-top{display:flex;gap:14px}
+.wphoto{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.winfo{flex:1}
+.wname{font-size:16px;font-weight:700;color:var(--text)}
+.wrole{font-size:11px;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:0.6px;margin-top:2px}
+.wmeta{display:flex;gap:14px;margin-top:6px;font-size:12px;color:var(--muted)}
+.wmeta span{display:flex;align-items:center;gap:4px}
+.wrate{font-size:14px;font-weight:700;color:var(--secondary);margin-top:4px}
+.wphone{font-size:12px;color:var(--muted);margin-top:2px}
+.wtag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;margin-top:6px}
+.tag-verified{background:#d1fae5;color:#065f46}
+.tag-busy{background:#fee2e2;color:#991b1b}
+.tag-available{background:#dbeafe;color:#1e40af}
+.wcard-btns{display:flex;gap:10px;margin-top:14px}
+.wbtn{flex:1;padding:10px;border-radius:10px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s}
+.wbtn-call{background:var(--secondary);color:white}
+.wbtn-book{background:#f1f5f9;color:var(--text)}
+.wbtn-book:hover{background:#e2e8eb}
+.dist-badge{position:absolute;top:12px;right:12px;background:var(--primary);color:white;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.overlay.active{display:flex}
+.modal{background:var(--card);border-radius:24px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;padding:28px;position:relative;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{position:absolute;top:16px;right:20px;font-size:24px;cursor:pointer;color:var(--muted)}
+.modal-hero{text-align:center;margin-bottom:20px}
+.modal-photo{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:44px;margin:0 auto 12px}
+.modal-name{font-size:22px;font-weight:800;color:var(--text)}
+.modal-role{font-size:12px;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-top:4px}
+.modal-rating{color:var(--accent);font-weight:700;font-size:14px;margin-top:6px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.ditem{background:#f8fafc;padding:14px;border-radius:12px}
+.ditem label{font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:0.5px}
+.ditem value{display:block;font-size:15px;font-weight:700;color:var(--text);margin-top:4px}
+.modal-actions{display:flex;gap:12px;margin-top:20px}
+.modal-actions .wbtn{padding:14px;font-size:15px}
+.wbtn-primary{background:var(--primary);color:white}
+.wbtn-primary:hover{background:var(--primary-dark)}
+.booking-page{max-width:560px;margin:0 auto}
+.form-card{background:var(--card);border-radius:20px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,0.04);border:1px solid var(--border)}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:12px;font-size:14px;outline:none;transition:border 0.2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary)}
+.form-group textarea{min-height:80px;resize:vertical}
+.days-counter{display:flex;align-items:center;gap:12px}
+.days-counter button{width:36px;height:36px;border-radius:50%;border:none;background:var(--primary);color:white;font-size:18px;cursor:pointer}
+.days-counter span{font-size:18px;font-weight:800;color:var(--text);min-width:30px;text-align:center}
+.wage-preview{background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);border:2px solid #bbf7d0;border-radius:16px;padding:20px;margin-top:20px}
+.wage-preview h3{font-size:16px;color:#166534;margin-bottom:12px}
+.wage-row{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;color:#166534}
+.wage-row.total{border-top:2px solid #bbf7d0;margin-top:8px;padding-top:12px;font-size:18px;font-weight:800}
+.pay-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.pay-method{border:2px solid var(--border);border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:all 0.2s}
+.pay-method:hover,.pay-method.selected{border-color:var(--primary);background:#eef2ff}
+.pay-method .icon{font-size:24px;margin-bottom:4px}
+.pay-method .name{font-size:12px;font-weight:700;color:var(--text)}
+.submit-btn{width:100%;padding:16px;background:var(--secondary);color:white;border:none;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;margin-top:20px;transition:all 0.2s}
+.submit-btn:hover{background:#059669}
+.register-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.photo-upload{border:2px dashed var(--border);border-radius:16px;padding:32px;text-align:center;cursor:pointer;transition:all 0.2s}
+.photo-upload:hover{border-color:var(--primary);background:#f5f3ff}
+.photo-upload .icon{font-size:40px;margin-bottom:8px}
+.photo-upload .txt{font-size:13px;color:var(--muted);font-weight:600}
+.success-msg{background:#d1fae5;color:#065f46;padding:16px;border-radius:12px;text-align:center;font-weight:700;display:none}
+.success-msg.show{display:block}
+.loc-map{background:var(--card);border-radius:20px;padding:24px;border:1px solid var(--border);margin-bottom:24px}
+.loc-map h3{margin-bottom:16px}
+.loc-list{display:grid;gap:10px}
+.loc-item{padding:14px 18px;background:#f8fafc;border-radius:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border:2px solid transparent;transition:all 0.2s}
+.loc-item:hover,.loc-item.selected{border-color:var(--primary);background:#eef2ff}
+.loc-item .name{font-weight:700;color:var(--text)}
+.loc-item .dist{font-size:12px;color:var(--muted)}
+.empty{text-align:center;padding:80px 20px;color:var(--muted)}
+.empty .icon{font-size:56px;margin-bottom:16px}
+.empty h3{font-size:18px;color:var(--text);margin-bottom:8px}
+.footer{background:var(--text);color:white;padding:32px 24px;text-align:center;margin-top:40px;border-radius:20px 20px 0 0}
+.footer p{font-size:13px;opacity:0.7}
+.pwa-banner{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--card);padding:16px 24px;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.15);display:none;align-items:center;gap:16px;z-index:300;border:1px solid var(--border)}
+.pwa-banner.show{display:flex}
+.pwa-banner button{background:var(--primary);color:white;border:none;padding:10px 20px;border-radius:10px;font-weight:700;cursor:pointer}
+@media(max-width:640px){.register-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:24px}.hero-search{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="logo" onclick="showPage('home')">🛠️ KaamDhaam</div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-page="home" onclick="showPage('home')">Home</button>
+      <button class="nav-btn" data-page="browse" onclick="showPage('browse')">Browse</button>
+      <button class="nav-btn" data-page="register" onclick="showPage('register')">Register</button>
+      <button class="nav-btn" data-page="location" onclick="showPage('location')">Location</button>
+    </div>
+  </div>
+
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <h1>🛠️ KaamDhaam</h1>
+      <p>India's largest marketplace for daily wage workers, skilled labour, tutors, pandits, halwais, DJs & more. Book, pay, and hire — all in one place.</p>
+      <div class="hero-search">
+        <input type="text" id="heroSearch" placeholder="Search carpenter, cook, pandit, tutor..." onkeydown="if(event.key==='Enter'){searchFromHero();}">
+        <button onclick="searchFromHero()">Search</button>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-card"><div class="num">2,400+</div><div class="lbl">Workers</div></div>
+      <div class="stat-card"><div class="num">15</div><div class="lbl">Categories</div></div>
+      <div class="stat-card"><div class="num">50+</div><div class="lbl">Cities</div></div>
+      <div class="stat-card"><div class="num">₹12Cr+</div><div class="lbl">Wages Paid</div></div>
+    </div>
+    <div class="section-title">📂 Browse by Category</div>
+    <div class="cat-grid" id="homeCats"></div>
+    <div class="section-title">⭐ Featured Workers</div>
+    <div class="worker-grid" id="featuredWorkers"></div>
+  </div>
+
+  <div class="page" id="page-browse">
+    <div class="browse-header">
+      <div class="search-wrap"><input type="text" id="browseSearch" placeholder="Search by name, skill, or city..." oninput="filterBrowse()"></div>
+      <button class="loc-btn" onclick="showPage('location')">📍 <span id="currentLocLabel">All India</span></button>
+    </div>
+    <div class="filter-chips" id="browseChips"></div>
+    <div class="worker-grid" id="browseGrid"></div>
+  </div>
+
+  <div class="page" id="page-register">
+    <div class="booking-page">
+      <div class="section-title">📝 Register as a Worker</div>
+      <div class="form-card">
+        <div class="success-msg" id="regSuccess">✅ Registration submitted! Our team will verify your details within 24 hours.</div>
+        <div class="register-grid">
+          <div class="form-group"><label>Full Name</label><input type="text" id="regName" placeholder="Your full name"></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" id="regPhone" placeholder="+91-98765 43210"></div>
+          <div class="form-group"><label>City / Area</label><input type="text" id="regCity" placeholder="e.g. Delhi, Karol Bagh"></div>
+          <div class="form-group"><label>Category</label>
+            <select id="regCategory">
+              <option value="">Select your skill</option>
+              <option value="carpenter">🪚 Carpenter</option>
+              <option value="mistri">🧱 Mason (Mistri)</option>
+              <option value="labour">💪 Labour</option>
+              <option value="cook">👨‍🍳 Cook</option>
+              <option value="electrician">⚡ Electrician</option>
+              <option value="plumber">🔧 Plumber</option>
+              <option value="painter">🎨 Painter</option>
+              <option value="driver">🚗 Driver</option>
+              <option value="hairdresser">✂️ Hair Dresser (Nai)</option>
+              <option value="pandit">🕉️ Pandit / Priest</option>
+              <option value="halwai">🍬 Halwai / Sweet Maker</option>
+              <option value="dj">🎧 DJ / Sound</option>
+              <option value="roadlights">💡 Road Light Electrician</option>
+              <option value="tutor">📚 School / Coaching Tutor</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Daily Wage (₹)</label><input type="number" id="regWage" placeholder="e.g. 800"></div>
+          <div class="form-group"><label>Experience (Years)</label><input type="number" id="regExp" placeholder="e.g. 5"></div>
+        </div>
+        <div class="form-group"><label>About Your Work</label><textarea id="regAbout" placeholder="Describe your skills, past work, availability..."></textarea></div>
+        <div class="form-group"><label>Upload Photo</label>
+          <div class="photo-upload" onclick="alert('In real app: Camera/Gallery picker would open here')">
+            <div class="icon">📷</div>
+            <div class="txt">Tap to upload your photo</div>
+          </div>
+        </div>
+        <button class="submit-btn" onclick="submitRegistration()">🚀 Submit Registration</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-location">
+    <div class="booking-page">
+      <div class="section-title">📍 Select Your Location</div>
+      <div class="loc-map">
+        <h3>🗺️ Popular Cities</h3>
+        <div class="loc-list" id="locList"></div>
+      </div>
+      <div class="form-card">
+        <div class="form-group"><label>Or enter your area</label><input type="text" id="customLoc" placeholder="e.g. Delhi, Karol Bagh"></div>
+        <button class="submit-btn" onclick="setCustomLocation()">📍 Set Location</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-booking">
+    <div class="booking-page">
+      <div class="section-title" id="bookTitle">📅 Book Worker</div>
+      <div class="form-card">
+        <div id="bookWorkerInfo" style="display:flex;gap:16px;align-items:center;margin-bottom:20px;padding:16px;background:#f8fafc;border-radius:12px;">
+          <div id="bookPhoto" style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:24px;">👤</div>
+          <div><div id="bookName" style="font-weight:800;font-size:16px;">Name</div><div id="bookRole" style="font-size:12px;color:#6366f1;font-weight:700;text-transform:uppercase;">Role</div><div id="bookRate" style="font-size:14px;color:#10b981;font-weight:700;margin-top:2px;">₹0/day</div></div>
+        </div>
+        <div class="form-group"><label>Work Description</label><textarea id="bookDesc" placeholder="Describe the work needed..."></textarea></div>
+        <div class="register-grid">
+          <div class="form-group"><label>Start Date</label><input type="date" id="bookDate"></div>
+          <div class="form-group"><label>Number of Days</label>
+            <div class="days-counter">
+              <button onclick="changeDays(-1)">−</button>
+              <span id="dayCount">1</span>
+              <button onclick="changeDays(1)">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="wage-preview">
+          <h3>💰 Wage Calculation</h3>
+          <div class="wage-row"><span>Daily Wage</span><span id="wageDaily">₹0</span></div>
+          <div class="wage-row"><span>Number of Days</span><span id="wageDays">1</span></div>
+          <div class="wage-row"><span>Platform Fee (2%)</span><span id="wageFee">₹0</span></div>
+          <div class="wage-row total"><span>Total Amount</span><span id="wageTotal">₹0</span></div>
+        </div>
+        <div class="form-group" style="margin-top:20px;"><label>Select Payment Method</label>
+          <div class="pay-methods">
+            <div class="pay-method selected" onclick="selectPay(this,'upi')"><div class="icon">📱</div><div class="name">UPI</div></div>
+            <div class="pay-method" onclick="selectPay(this,'card')"><div class="icon">💳</div><div class="name">Card</div></div>
+            <div class="pay-method" onclick="selectPay(this,'cash')"><div class="icon">💵</div><div class="name">Cash</div></div>
+          </div>
+        </div>
+        <div id="upiSection">
+          <div class="form-group"><label>UPI ID</label><input type="text" placeholder="yourname@upi" value="kaamdhaam@upi"></div>
+        </div>
+        <button class="submit-btn" onclick="confirmBooking()">✅ Confirm & Pay</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="detailOverlay" onclick="closeDetail(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-close" onclick="closeDetail()">✕</div>
+      <div class="modal-hero">
+        <div class="modal-photo" id="dPhoto">👤</div>
+        <div class="modal-name" id="dName">Name</div>
+        <div class="modal-role" id="dRole">Role</div>
+        <div class="modal-rating" id="dRating">⭐ 4.5 (120 reviews)</div>
+      </div>
+      <div class="detail-grid">
+        <div class="ditem"><label>📱 Phone</label><value id="dPhone">+91-XXXXXXXXXX</value></div>
+        <div class="ditem"><label>📍 Location</label><value id="dLoc">City</value></div>
+        <div class="ditem"><label>💼 Experience</label><value id="dExp">5 Years</value></div>
+        <div class="ditem"><label>💰 Daily Rate</label><value id="dRate">₹500/day</value></div>
+        <div class="ditem"><label>🕐 Availability</label><value id="dAvail">Available</value></div>
+        <div class="ditem"><label>📏 Distance</label><value id="dDist">2.3 km</value></div>
+      </div>
+      <div style="background:#f8fafc;padding:16px;border-radius:12px;margin:16px 0;">
+        <label style="font-size:11px;color:#64748b;text-transform:uppercase;font-weight:700;">About</label>
+        <p style="font-size:14px;color:#1e293b;margin-top:6px;line-height:1.6;" id="dAbout">Experienced professional with verified background.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="wbtn wbtn-call" onclick="callWorker()">📞 Call Now</button>
+        <button class="wbtn wbtn-primary" onclick="openBooking()">📅 Book & Pay</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pwa-banner" id="pwaBanner">
+    <div>📲 Install KaamDhaam on your phone for quick access!</div>
+    <button onclick="installPWA()">Install</button>
+  </div>
+
+  <div class="footer">
+    <p>🛠️ KaamDhaam — Connecting skilled workers with those who need them. Built for Bharat.</p>
+    <p style="margin-top:8px;">© 2026 KaamDhaam Pvt Ltd. All rights reserved.</p>
+  </div>
+</div>
+
+<script>
+const categories=[{key:'carpenter',emoji:'🪚',name:'Carpenter',count:340},{key:'mistri',emoji:'🧱',name:'Mason (Mistri)',count:280},{key:'labour',emoji:'💪',name:'Labour',count:520},{key:'cook',emoji:'👨‍🍳',name:'Cook',count:190},{key:'electrician',emoji:'⚡',name:'Electrician',count:410},{key:'plumber',emoji:'🔧',name:'Plumber',count:350},{key:'painter',emoji:'🎨',name:'Painter',count:220},{key:'driver',emoji:'🚗',name:'Driver',count:310},{key:'hairdresser',emoji:'✂️',name:'Hair Dresser',count:160},{key:'pandit',emoji:'🕉️',name:'Pandit / Priest',count:85},{key:'halwai',emoji:'🍬',name:'Halwai / Sweet',count:120},{key:'dj',emoji:'🎧',name:'DJ / Sound',count:95},{key:'roadlights',emoji:'💡',name:'Road Light Elec.',count:70},{key:'tutor',emoji:'📚',name:'Tutor / Coaching',count:450}];
+const workers=[{id:1,name:"Ramesh Kumar",role:"carpenter",roleLabel:"Carpenter",phone:"+91-98765 43210",location:"Delhi, Karol Bagh",rating:4.8,exp:"12 Years",rate:800,avail:"Available",photo:"🪚",tag:"verified",about:"Expert in modular furniture, wooden doors, and custom cabinets. 12 years of experience across Delhi-NCR.",dist:1.2},{id:2,name:"Suresh Yadav",role:"mistri",roleLabel:"Mason (Mistri)",phone:"+91-98765 43211",location:"Delhi, Lajpat Nagar",rating:4.6,exp:"15 Years",rate:900,avail:"Available",photo:"🧱",tag:"verified",about:"Specialist in brickwork, plastering, and RCC work. Completed 200+ residential and commercial projects.",dist:3.5},{id:3,name:"Pramod Singh",role:"labour",roleLabel:"Labour",phone:"+91-98765 43212",location:"Delhi, Dwarka",rating:4.3,exp:"5 Years",rate:500,avail:"Available",photo:"💪",tag:"available",about:"Hardworking general labour. Skilled in loading, unloading, site cleaning, and material shifting.",dist:5.1},{id:4,name:"Anita Devi",role:"cook",roleLabel:"Cook",phone:"+91-98765 43213",location:"Delhi, Saket",rating:4.9,exp:"8 Years",rate:1200,avail:"Busy",photo:"👩‍🍳",tag:"busy",about:"Professional home cook specializing in North Indian, South Indian, and Continental cuisine. Hygiene certified.",dist:2.8},{id:5,name:"Mohammad Ali",role:"electrician",roleLabel:"Electrician",phone:"+91-98765 43214",location:"Delhi, Chandni Chowk",rating:4.7,exp:"10 Years",rate:700,avail:"Available",photo:"⚡",tag:"verified",about:"Licensed electrician. Expert in home wiring, inverter installation, MCB panels, and industrial electrical work.",dist:4.2},{id:6,name:"Rajesh Gupta",role:"plumber",roleLabel:"Plumber",phone:"+91-98765 43215",location:"Delhi, Rohini",rating:4.5,exp:"7 Years",rate:650,avail:"Available",photo:"🔧",tag:"verified",about:"All plumbing solutions: pipe fitting, motor installation, bathroom fittings, leakage repair, and tank cleaning.",dist:6.3},{id:7,name:"Vijay Pal",role:"painter",roleLabel:"Painter",phone:"+91-98765 43216",location:"Delhi, Pitampura",rating:4.4,exp:"9 Years",rate:550,avail:"Available",photo:"🎨",tag:"available",about:"Interior and exterior painting, texture work, wallpaper installation, and wood polishing.",dist:3.9},{id:8,name:"Kamlesh Tiwari",role:"driver",roleLabel:"Driver",phone:"+91-98765 43217",location:"Delhi, Vasant Kunj",rating:4.6,exp:"11 Years",rate:1000,avail:"Available",photo:"🚗",tag:"verified",about:"Professional driver with commercial license. Safe driving record. Available for personal and commercial vehicles.",dist:7.1},{id:9,name:"Ganesh Prasad",role:"carpenter",roleLabel:"Carpenter",phone:"+91-98765 43218",location:"Mumbai, Andheri",rating:4.5,exp:"8 Years",rate:850,avail:"Available",photo:"🪚",tag:"available",about:"Modular kitchen expert. Works with plywood, MDF, and solid wood. Free measurement and design consultation.",dist:1200},{id:10,name:"Bablu Mishra",role:"mistri",roleLabel:"Mason (Mistri)",phone:"+91-98765 43219",location:"Mumbai, Borivali",rating:4.2,exp:"6 Years",rate:750,avail:"Available",photo:"🧱",tag:"available",about:"Tile fitting, marble work, and waterproofing specialist. Works on both residential and commercial sites.",dist:1250},{id:11,name:"Sunita Bai",role:"cook",roleLabel:"Cook",phone:"+91-98765 43220",location:"Mumbai, Dadar",rating:4.8,exp:"14 Years",rate:1500,avail:"Available",photo:"👩‍🍳",tag:"verified",about:"Expert in Maharashtrian, Gujarati, and Jain cuisine. Also prepares tiffins for offices and events.",dist:1180},{id:12,name:"Deepak Sharma",role:"labour",roleLabel:"Labour",phone:"+91-98765 43221",location:"Mumbai, Kurla",rating:4.1,exp:"3 Years",rate:600,avail:"Available",photo:"💪",tag:"available",about:"Young and energetic labour. Quick learner. Available for construction and warehouse work.",dist:1195},{id:13,name:"Ajay Rathore",role:"electrician",roleLabel:"Electrician",phone:"+91-98765 43222",location:"Bangalore, Koramangala",rating:4.9,exp:"13 Years",rate:900,avail:"Busy",photo:"⚡",tag:"busy",about:"Industrial and residential electrical expert. Solar panel installation, home automation, and smart switches.",dist:2100},{id:14,name:"Nand Kishore",role:"plumber",roleLabel:"Plumber",phone:"+91-98765 43223",location:"Bangalore, Whitefield",rating:4.6,exp:"10 Years",rate:800,avail:"Available",photo:"🔧",tag:"verified",about:"24/7 emergency plumbing. Pipe relining, sump work, and RO water purifier installation.",dist:2120},{id:15,name:"Lakhan Singh",role:"painter",roleLabel:"Painter",phone:"+91-98765 43224",location:"Bangalore, HSR Layout",rating:4.3,exp:"5 Years",rate:700,avail:"Available",photo:"🎨",tag:"available",about:"Specializes in decorative paints, stencil work, and 3D wall textures. Uses premium Asian Paints products.",dist:2080},{id:16,name:"Harpreet Kaur",role:"driver",roleLabel:"Driver",phone:"+91-98765 43225",location:"Bangalore, Indiranagar",rating:4.7,exp:"9 Years",rate:1100,avail:"Available",photo:"🚗",tag:"verified",about:"Female driver available for school drops, office commute, and outstation trips. Verified background.",dist:2095},{id:17,name:"Babu Nai",role:"hairdresser",roleLabel:"Hair Dresser",phone:"+91-98765 43301",location:"Delhi, Paharganj",rating:4.6,exp:"10 Years",rate:400,avail:"Available",photo:"✂️",tag:"verified",about:"Traditional barber services: haircut, shave, facial, hair colour, and head massage. Home service available.",dist:2.1},{id:18,name:"Raju Nai",role:"hairdresser",roleLabel:"Hair Dresser",phone:"+91-98765 43302",location:"Delhi, Rajouri Garden",rating:4.4,exp:"6 Years",rate:350,avail:"Available",photo:"✂️",tag:"available",about:"Modern and traditional cuts. Beard styling, hair spa, and bridal grooming packages.",dist:4.5},{id:19,name:"Pandit Rameshwar",role:"pandit",roleLabel:"Pandit / Priest",phone:"+91-98765 43303",location:"Delhi, Kalkaji",rating:4.9,exp:"20 Years",rate:2100,avail:"Available",photo:"🕉️",tag:"verified",about:"Vedic pandit for all pujas: Griha Pravesh, Satyanarayan Katha, Marriage, Mundan, and Shradh. Fluent in Hindi & Sanskrit.",dist:3.8},{id:20,name:"Pandit Shyam",role:"pandit",roleLabel:"Pandit / Priest",phone:"+91-98765 43304",location:"Jaipur, Vaishali Nagar",rating:4.7,exp:"15 Years",rate:1500,avail:"Available",photo:"🕉️",tag:"verified",about:"Specialist in Rajasthani traditions and rituals. Available for destination weddings and havan ceremonies.",dist:260},{id:21,name:"Gopal Halwai",role:"halwai",roleLabel:"Halwai / Sweet Maker",phone:"+91-98765 43305",location:"Delhi, Chandni Chowk",rating:4.8,exp:"18 Years",rate:2500,avail:"Available",photo:"🍬",tag:"verified",about:"Famous for traditional sweets: Jalebi, Rabri, Kaju Katli, and Bengali sweets. Event catering for 50-5000 people.",dist:4.0},{id:22,name:"Mohan Halwai",role:"halwai",roleLabel:"Halwai / Sweet Maker",phone:"+91-98765 43306",location:"Agra, Sadar Bazar",rating:4.5,exp:"12 Years",rate:2000,avail:"Available",photo:"🍬",tag:"available",about:"Agra's famous petha, gajak, and revdi maker. Also prepares full vegetarian thali for events and parties.",dist:210},{id:23,name:"DJ Rocky",role:"dj",roleLabel:"DJ / Sound",phone:"+91-98765 43307",location:"Delhi, Punjabi Bagh",rating:4.7,exp:"8 Years",rate:5000,avail:"Available",photo:"🎧",tag:"verified",about:"Wedding DJ, corporate events, and college fests. Full sound system with 4 bass speakers and LED setup.",dist:5.5},{id:24,name:"DJ Rohit",role:"dj",roleLabel:"DJ / Sound",phone:"+91-98765 43308",location:"Mumbai, Bandra",rating:4.6,exp:"6 Years",rate:4500,avail:"Available",photo:"🎧",tag:"available",about:"Bollywood remix specialist. Available for sangeet, reception, and private parties. Light and smoke machine included.",dist:1210},{id:25,name:"Suresh Electric",role:"roadlights",roleLabel:"Road Light Elec.",phone:"+91-98765 43309",location:"Delhi, Narela",rating:4.4,exp:"9 Years",rate:1200,avail:"Available",photo:"💡",tag:"verified",about:"Municipal and private road light installation & maintenance. LED street light, solar pole, and high-mast work.",dist:15.2},{id:26,name:"Vikram Light",role:"roadlights",roleLabel:"Road Light Elec.",phone:"+91-98765 43310",location:"Jaipur, Malviya Nagar",rating:4.3,exp:"7 Years",rate:1000,avail:"Available",photo:"💡",tag:"available",about:"Smart city lighting projects. Sensor-based auto street lights and decorative lighting for colonies and parks.",dist:265},{id:27,name:"Ravi Sir",role:"tutor",roleLabel:"Tutor / Coaching",phone:"+91-98765 43311",location:"Delhi, Laxmi Nagar",rating:4.9,exp:"10 Years",rate:800,avail:"Available",photo:"📚",tag:"verified",about:"Maths & Science tutor for classes 6-10 (CBSE & ICSE). Home tuition and online classes available. 95% success rate.",dist:3.2},{id:28,name:"Neha Ma'am",role:"tutor",roleLabel:"Tutor / Coaching",phone:"+91-98765 43312",location:"Delhi, Dwarka",rating:4.8,exp:"7 Years",rate:700,avail:"Available",photo:"📚",tag:"verified",about:"English & SST tutor. Spoken English classes for adults. IELTS coaching available. Group and individual sessions.",dist:5.8},{id:29,name:"Amit Sir",role:"tutor",roleLabel:"Tutor / Coaching",phone:"+91-98765 43313",location:"Bangalore, Koramangala",rating:4.7,exp:"12 Years",rate:900,avail:"Busy",photo:"📚",tag:"busy",about:"Physics & Chemistry JEE/NEET specialist. Former FIITJEE faculty. Online crash courses and doubt sessions.",dist:2105},{id:30,name:"Priya Ma'am",role:"tutor",roleLabel:"Tutor / Coaching",phone:"+91-98765 43314",location:"Mumbai, Andheri",rating:4.6,exp:"5 Years",rate:750,avail:"Available",photo:"📚",tag:"available",about:"Hindi & Marathi tutor. Music teacher (classical vocal). Available for school and hobby classes.",dist:1205}];
+const locations=[{name:"Delhi",dist:0},{name:"Mumbai",dist:1200},{name:"Bangalore",dist:2100},{name:"Jaipur",dist:260},{name:"Agra",dist:210},{name:"Chennai",dist:2200},{name:"Kolkata",dist:1500},{name:"Hyderabad",dist:1600}];
+let currentPage='home',selectedCategory='all',selectedLocation='All India',searchQuery='',currentWorker=null,bookingDays=1,selectedPayment='upi',deferredPrompt=null;
+function init(){renderHomeCats();renderFeatured();renderBrowseChips();renderBrowseGrid();renderLocList();document.getElementById('bookDate').valueAsDate=new Date();setupPWA()}
+function setupPWA(){window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('pwaBanner').classList.add('show')})}
+function installPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{document.getElementById('pwaBanner').classList.remove('show');deferredPrompt=null})}}
+function showPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+page).classList.add('active');document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));const btn=document.querySelector('.nav-btn[data-page="'+page+'"]');if(btn)btn.classList.add('active');currentPage=page;window.scrollTo(0,0)}
+function renderHomeCats(){document.getElementById('homeCats').innerHTML=categories.map(c=>`<div class="cat-card" onclick="goToCategory('${c.key}')"><div class="emoji">${c.emoji}</div><div class="name">${c.name}</div><div class="count">${c.count} workers</div></div>`).join('')}
+function renderFeatured(){const featured=workers.filter(w=>w.tag==='verified').slice(0,6);document.getElementById('featuredWorkers').innerHTML=featured.map(w=>workerCard(w)).join('')}
+function searchFromHero(){const q=document.getElementById('heroSearch').value;document.getElementById('browseSearch').value=q;searchQuery=q;showPage('browse');filterBrowse()}
+function goToCategory(cat){selectedCategory=cat;showPage('browse');renderBrowseChips();filterBrowse()}
+function renderBrowseChips(){const chips=[{key:'all',label:'All'},...categories.map(c=>({key:c.key,label:c.emoji+' '+c.name}))];document.getElementById('browseChips').innerHTML=chips.map(c=>`<div class="fchip ${selectedCategory===c.key?'active':''}" onclick="setCategory('${c.key}')">${c.label}</div>`).join('')}
+function setCategory(cat){selectedCategory=cat;renderBrowseChips();filterBrowse()}
+function filterBrowse(){searchQuery=document.getElementById('browseSearch').value;renderBrowseGrid()}
+function renderBrowseGrid(){let list=workers;if(selectedCategory!=='all')list=list.filter(w=>w.role===selectedCategory);if(searchQuery){const q=searchQuery.toLowerCase();list=list.filter(w=>w.name.toLowerCase().includes(q)||w.roleLabel.toLowerCase().includes(q)||w.location.toLowerCase().includes(q))}if(selectedLocation!=='All India'){list=list.filter(w=>w.location.includes(selectedLocation))}const grid=document.getElementById('browseGrid');if(list.length===0){grid.innerHTML=`<div class="empty" style="grid-column:1/-1;"><div class="icon">🔍</div><h3>No workers found</h3><p>Try a different search or category</p></div>`;return}grid.innerHTML=list.map(w=>workerCard(w)).join('')}
+function workerCard(w){return`<div class="wcard" onclick="openDetail(${w.id})">${w.dist<50?`<div class="dist-badge">${w.dist} km</div>`:''}<div class="wcard-top"><div class="wphoto">${w.photo}</div><div class="winfo"><div class="wname">${w.name}</div><div class="wrole">${w.roleLabel}</div><div class="wmeta"><span>⭐ ${w.rating}</span><span>📍 ${w.location.split(',')[1]||w.location}</span></div><div class="wrate">₹${w.rate}/day</div><div class="wphone">📱 ${w.phone}</div>${w.tag==='verified'?'<span class="wtag tag-verified">✓ Verified</span>':w.tag==='busy'?'<span class="wtag tag-busy">⏸ Busy</span>':'<span class="wtag tag-available">● Available</span>'}</div></div><div class="wcard-btns"><button class="wbtn wbtn-call" onclick="event.stopPropagation(); alert('Calling ${w.phone}')">📞 Call</button><button class="wbtn wbtn-book" onclick="event.stopPropagation(); openBookingFromCard(${w.id})">📅 Book</button></div></div>`}
+function openDetail(id){const w=workers.find(x=>x.id===id);if(!w)return;currentWorker=w;document.getElementById('dPhoto').textContent=w.photo;document.getElementById('dName').textContent=w.name;document.getElementById('dRole').textContent=w.roleLabel;document.getElementById('dRating').textContent='⭐ '+w.rating+' (Verified reviews)';document.getElementById('dPhone').textContent=w.phone;document.getElementById('dLoc').textContent=w.location;document.getElementById('dExp').textContent=w.exp;document.getElementById('dRate').textContent='₹'+w.rate+'/day';document.getElementById('dAvail').textContent=w.avail;document.getElementById('dDist').textContent=w.dist+' km away';document.getElementById('dAbout').textContent=w.about;document.getElementById('detailOverlay').classList.add('active')}
+function closeDetail(e){if(e&&e.target!==document.getElementById('detailOverlay'))return;document.getElementById('detailOverlay').classList.remove('active')}
+function callWorker(){if(currentWorker)alert('📞 Calling '+currentWorker.name+' at '+currentWorker.phone)}
+function openBooking(){closeDetail();openBookingFromCard(currentWorker.id)}
+function openBookingFromCard(id){const w=workers.find(x=>x.id===id);if(!w)return;currentWorker=w;bookingDays=1;document.getElementById('bookPhoto').textContent=w.photo;document.getElementById('bookName').textContent=w.name;document.getElementById('bookRole').textContent=w.roleLabel;document.getElementById('bookRate').textContent='₹'+w.rate+'/day';document.getElementById('dayCount').textContent='1';document.getElementById('bookDesc').value='';updateWagePreview();showPage('booking')}
+function changeDays(delta){bookingDays=Math.max(1,Math.min(30,bookingDays+delta));document.getElementById('dayCount').textContent=bookingDays;updateWagePreview()}
+function updateWagePreview(){if(!currentWorker)return;const daily=currentWorker.rate,total=daily*bookingDays,fee=Math.round(total*0.02);document.getElementById('wageDaily').textContent='₹'+daily;document.getElementById('wageDays').textContent=bookingDays;document.getElementById('wageFee').textContent='₹'+fee;document.getElementById('wageTotal').textContent='₹'+(total+fee)}
+function selectPay(el,method){document.querySelectorAll('.pay-method').forEach(p=>p.classList.remove('selected'));el.classList.add('selected');selectedPayment=method;document.getElementById('upiSection').style.display=method==='upi'?'block':'none'}
+function confirmBooking(){if(!currentWorker)return;const desc=document.getElementById('bookDesc').value,date=document.getElementById('bookDate').value;if(!desc||!date){alert('Please fill work description and start date');return}const total=document.getElementById('wageTotal').textContent;alert(`✅ Booking Confirmed!\n\nWorker: ${currentWorker.name}\nWork: ${desc}\nStart: ${date}\nDays: ${bookingDays}\nTotal: ${total}\nPayment: ${selectedPayment.toUpperCase()}\n\nA confirmation has been sent to your phone.`);showPage('browse')}
+function submitRegistration(){const name=document.getElementById('regName').value,phone=document.getElementById('regPhone').value,city=document.getElementById('regCity').value,cat=document.getElementById('regCategory').value,wage=document.getElementById('regWage').value;if(!name||!phone||!city||!cat||!wage){alert('Please fill all required fields');return}document.getElementById('regSuccess').classList.add('show');setTimeout(()=>{document.getElementById('regSuccess').classList.remove('show');showPage('home')},3000)}
+function renderLocList(){document.getElementById('locList').innerHTML=locations.map(l=>`<div class="loc-item ${selectedLocation===l.name?'selected':''}" onclick="setLocation('${l.name}')"><div><div class="name">📍 ${l.name}</div></div><div class="dist">${l.dist} km away</div></div>`).join('')}
+function setLocation(loc){selectedLocation=loc;document.getElementById('currentLocLabel').textContent=loc;renderLocList();showPage('browse');filterBrowse()}
+function setCustomLocation(){const val=document.getElementById('customLoc').value;if(!val)return;selectedLocation=val;document.getElementById('currentLocLabel').textContent=val;showPage('browse');filterBrowse()}
+init();
+</script>
+</body>
+</html>
